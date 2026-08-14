@@ -18,12 +18,13 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/logout', [AuthController::class, 'logout']);
-});
-
-
-Route::middleware('auth:sanctum')->group(function () {
     Route::get('/kategori', [KategoriController::class, 'index']);
     Route::post('/kategori', [KategoriController::class, 'store']);
     Route::put('/kategori/{id}', [KategoriController::class, 'update']);
     Route::delete('/kategori/{id}', [KategoriController::class, 'destroy']);
+    Route::get('/pelanggan', [PelangganController::class, 'index']);
+    Route::post('/pelanggan', [PelangganController::class, 'store']);
+    Route::put('/pelanggan/{id}', [PelangganController::class, 'update']);
+    Route::delete('/pelanggan/{id}', [PelangganController::class, 'destroy']);
+
 });

@@ -12,10 +12,10 @@ class KategoriController extends Controller
     public function index()
     {
         try {
-            $kategori = Kategori::lastest()->get();
+            $kategori = Kategori::latest()->get();
             return response()->json([
                 'status' => true,
-                'messae' => 'Data Kategori Berhasil Diambil',
+                'message' => 'Data Kategori Berhasil Diambil',
                 'data' => $kategori,
             ], 200);
         } catch (Exception $e) {
@@ -27,7 +27,7 @@ class KategoriController extends Controller
     {
         try {
             $request->validate([
-                'nama_kategori' => 'required|string|nama_kategori'
+                'nama_kategori' => 'required|string'
             ]);
 
             $kategori = Kategori::create([
@@ -36,14 +36,13 @@ class KategoriController extends Controller
 
             return response()->json([
                 'status' => true,
-                'messae' => 'Data Kategori Berhasil Dibuat',
+                'message' => 'Data Kategori Berhasil Dibuat',
                 'data' => $kategori,
             ], 201);
         } catch (Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
         }
     }
-
     public function update (Request $request, $id)
     {
         try {
@@ -53,37 +52,37 @@ class KategoriController extends Controller
                     'status' => false,
                     'message' => 'data kategori tidak ada'
                 ], 404);
-
-                $request-validate([
-                    'name_kategori' => 'required|unique:kategori,nama_kategori,' . $id . 'id_kategori',
-                ]);
-
-                $kategori->nama_kategori = $request->nama_kategori;
-                $kategori->save();
-
-                return response()->json([
-                    'status' => true,
-                    'message' => 'data kategori berhasil di edit',
-                    'data' => $kategori,
-                ], 200);
-            } catch (Exception $e) {
-                return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
             }
+
+            $request->validate([
+                'nama_kategori' => 'required|string'
+            ]);
+
+            $kategori->nama_kategori = $request->nama_kategori;
+            $kategori->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'data kategori berhasil di edit',
+                'data' => $kategori,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
         }
+    }
 
-        public function destroy($id)
-        {
-            try {
-                $kategori = Kategori::find($id);
-                if (! $kategori) {
-                    return response()->json(['status' => false, 'message' => 'data kategori tidak di temukan'], 404);
-                }
-
-                $kategori->delete();
-                return response()->json(['status' => true, 'message' => 'data kategori berhasil di hapus'], 200);
-            } catch (exception $e) {
-                return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
+    public function destroy($id)
+    {
+        try {
+            $kategori = Kategori::find($id);
+            if (! $kategori) {
+                return response()->json(['status' => false, 'message' => 'data kategori tidak di temukan'], 404);
             }
+
+            $kategori->delete();
+            return response()->json(['status' => true, 'message' => 'data kategori berhasil di hapus'], 200);
+        } catch (Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
         }
     }
 }
