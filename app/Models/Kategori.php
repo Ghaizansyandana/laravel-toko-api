@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,10 +8,12 @@ class Kategori extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_kategori'];
-    public $timestamps = true;
 
-    // satu kategori bisa punya banyak produk
+    protected $fillable = ['nama_kategori'];
+    public $timestamps    = true;
+
+
+    // Satu kategori bisa punya banyak produk
     public function produk()
     {
         return $this->hasMany(Produk::class, 'id_kategori');

@@ -7,16 +7,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('pelanggans', function (Blueprint $table) {
-            $table->id('id');
-            $table->string('nama_pelanggan');
-            $table->text('alamat');
-            $table->timestamps();
+        Schema::create('pesanan', function (Blueprint $table) {
+            $table->id('id_pesanan');
+            $table->foreignId('id_pelanggan')->nullable()->constrained('pelanggans');
+            $table->date('tanggal');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('pelanggan');
+        Schema::dropIfExists('pesanan');
     }
 };

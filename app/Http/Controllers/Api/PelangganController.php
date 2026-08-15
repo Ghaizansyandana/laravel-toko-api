@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -12,11 +11,11 @@ class PelangganController extends Controller
     public function index()
     {
         try {
-            $pelanggan = Pelanggan::lastest()->get();
+            $pelanggan = Pelanggan::latest()->get();
             return response()->json([
-                'status' => true,
-                'message' => 'Data Pelanggan Berhasil Diambil.',
-                'data' => $pelanggan,
+                'status'  => true,
+                'message' => 'Data Pelanggan berhasil diambil',
+                'data'    => $pelanggan,
             ], 200);
         } catch (Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
@@ -28,20 +27,19 @@ class PelangganController extends Controller
         try {
             $request->validate([
                 'nama_pelanggan' => 'required',
-                'alamat' => 'required',
+                'alamat'         => 'required',
             ]);
 
             $pelanggan = Pelanggan::create([
                 'nama_pelanggan' => $request->nama_pelanggan,
-                'alamat' => $request->alamat,
+                'alamat'         => $request->alamat,
             ]);
 
             return response()->json([
-                'status' => true,
-                'message' => 'Data Pelanggan Berhasil Dibuat.',
-                'data' => $pelanggan,
+                'status'  => true,
+                'message' => 'data pelanggan berhasil dibuat',
+                'data'    => $pelanggan,
             ], 201);
-
         } catch (Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
         }
@@ -51,25 +49,24 @@ class PelangganController extends Controller
     {
         try {
             $pelanggan = Pelanggan::find($id);
-            if (!pelanggan) {
-                return response()->json(['status' => false, 'message' => 'Data Pelanggan Tidak Ada'], 404);
+            if (! $pelanggan) {
+                return response()->json(['status' => false, 'message' => 'data pelanggan tidak ada'], 404);
             }
 
             $request->validate([
                 'nama_pelanggan' => 'required',
-                'alamat' => 'required',
+                'alamat'         => 'required',
             ]);
 
             $pelanggan->nama_pelanggan = $request->nama_pelanggan;
-            $pelanggan->alamat = $request->alamat;
+            $pelanggan->alamat         = $request->alamat;
             $pelanggan->save();
 
             return response()->json([
-                'status' => true,
-                'message' => 'Data Pelanggan Berhasil Diubah.',
-                'data' => $pelanggan,
+                'status'  => true,
+                'message' => 'data pelanggan berhasil diedit',
+                'data'    => $pelanggan,
             ], 200);
-
         } catch (Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
         }
